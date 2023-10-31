@@ -18,7 +18,7 @@ app.post("/", async (req, res) => {
         await newData.save()
         res.send({ "msg": "New Book Added Successfully" })
     } catch (err) {
-        res.send({ "msg": "Something Went Wrong ! Unable to Add Data","err":err.message })
+        res.send({ "msg": "Something Went Wrong ! Unable to Add Data", "err": err.message })
     }
 })
 
@@ -31,7 +31,7 @@ app.get("/", async (req, res) => {
         let getAll = await BookModel.find()
         res.send(getAll)
     } catch (err) {
-        res.send({ "msg": "Something Went Wrong ! Unable to Get Data","err":err.message })
+        res.send({ "msg": "Something Went Wrong ! Unable to Get Data", "err": err.message })
     }
 })
 
@@ -39,10 +39,13 @@ app.get("/", async (req, res) => {
 //<-----  Here You Can Get a Single book details by its id ----->
 
 app.get("/:id", async (req, res) => {
+    const id = req.params.id
+    console.log(id)
     try {
-
+        let SingleData = await BookModel.find({ _id: id })
+        res.send(SingleData)
     } catch (err) {
-
+        res.send({ "msg": "Something Went Wrong ! Unable to Get Data", "err": err.message })
     }
 })
 
@@ -60,10 +63,14 @@ app.delete("/:id", async (req, res) => {
 //<-----  Here You Can Update A Specific book by its Id ----->
 
 app.patch("/:id", async (req, res) => {
+    let data = req.body
+    let id = req.params.id
+
     try {
-
+        await BookModel.findOneAndUpdate({ _id: id }, data)
+        res.send({ "msg": "Book Data Updated Successfully" })
     } catch (err) {
-
+        res.send({ "msg": "Something Went Wrong ! Unable to Get Data", "err": err.message })
     }
 })
 
