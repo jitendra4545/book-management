@@ -53,10 +53,12 @@ app.get("/:id", async (req, res) => {
 //<-----  Here You Can Delete A Specific book by its Id ----->
 
 app.delete("/:id", async (req, res) => {
+    let id=req.params.id
     try {
-
+         await BookModel.findOneAndDelete({_id:id})
+         res.send({ "msg": "Book Data Deleted Successfully" }) 
     } catch (err) {
-
+        res.send({ "msg": "Something Went Wrong ! Unable to Delete Data", "err": err.message })
     }
 })
 
@@ -70,7 +72,7 @@ app.patch("/:id", async (req, res) => {
         await BookModel.findOneAndUpdate({ _id: id }, data)
         res.send({ "msg": "Book Data Updated Successfully" })
     } catch (err) {
-        res.send({ "msg": "Something Went Wrong ! Unable to Get Data", "err": err.message })
+        res.send({ "msg": "Something Went Wrong ! Unable to Update Data", "err": err.message })
     }
 })
 
