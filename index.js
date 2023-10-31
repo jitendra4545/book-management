@@ -1,12 +1,12 @@
 require("dotenv").config()
 const express = require('express')
+const cors=require('cors')
 const { connection } = require("./config/db")
 const { BookModel } = require("./model/BooksModel")
 const app = express()
 app.use(express.json())
-// app.get("/", (req, res) => {
-//     res.send("Hi this is a book management sysstem ")
-// })
+app.use(cors())
+
 
 
 //<-----  Here You Can Add New Books ----->
