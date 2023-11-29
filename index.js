@@ -23,7 +23,7 @@ app.post("/int", async (req, res) => {
 
 
 app.get("/int", async (req, res) => {
-
+ 
     try {
         let Data = await InterviewModel.find()
         res.send(Data)
