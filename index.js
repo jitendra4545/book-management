@@ -1,13 +1,36 @@
 require("dotenv").config()
 const express = require('express')
-const cors=require('cors')
+const cors = require('cors')
 const { connection } = require("./config/db")
 const { BookModel } = require("./model/BooksModel")
+const { InterviewModel } = require("./model/Interview")
 const app = express()
 app.use(express.json())
 app.use(cors())
 
 
+app.post("/int", async (req, res) => {
+    let { text, email } = req.body
+    console.log(text, email)
+    try {
+        let newData = new InterviewModel({ text, email })
+        await newData.save()
+        res.send({ "msg": "Chat Data added Successfully" })
+    } catch (err) {
+        req.send({ "msg": "Something went wrong", "err": err.message })
+    }
+})
+
+
+app.get("/int", async (req, res) => {
+
+    try {
+        let Data = await InterviewModel.find()
+        res.send(Data)
+    } catch (err) {
+        req.send({ "msg": "Something went wrong", "err": err.message })
+    }
+})
 
 //<-----  Here You Can Add New Books ----->
 
@@ -53,10 +76,10 @@ app.get("/:id", async (req, res) => {
 //<-----  Here You Can Delete A Specific book by its Id ----->
 
 app.delete("/:id", async (req, res) => {
-    let id=req.params.id
+    let id = req.params.id
     try {
-         await BookModel.findOneAndDelete({_id:id})
-         res.send({ "msg": "Book Data Deleted Successfully" }) 
+        await BookModel.findOneAndDelete({ _id: id })
+        res.send({ "msg": "Book Data Deleted Successfully" })
     } catch (err) {
         res.send({ "msg": "Something Went Wrong ! Unable to Delete Data", "err": err.message })
     }
