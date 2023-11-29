@@ -21,6 +21,16 @@ app.post("/int", async (req, res) => {
     }
 })
 
+app.delete("/int",async(req,res)=>{
+    try{
+        let Data=await InterviewModel.deleteMany()
+        res.send(Data)
+
+    }catch(err){
+        req.send({ "msg": "Something went wrong", "err": err.message })
+    }
+})
+
 
 app.get("/int", async (req, res) => {
  
