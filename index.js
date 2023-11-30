@@ -10,10 +10,10 @@ app.use(cors())
 
 
 app.post("/int", async (req, res) => {
-    let { text, email } = req.body
-    console.log(text, email)
+    let { text, ans } = req.body
+    console.log(text, ans)
     try {
-        let newData = new InterviewModel({ text, email })
+        let newData = new InterviewModel({ text, ans })
         await newData.save()
         res.send({ "msg": "Chat Data added Successfully" })
     } catch (err) {

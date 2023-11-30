@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 
 const InterviewSchema=mongoose.Schema({
     text:String,
-    email:{type:String}
+    ans:{type:String}
 })
 
 
